@@ -1,0 +1,223 @@
+<!DOCTYPE HTML>
+<!--
+	Multiverse by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>FLAG DAY</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="icon" type="image/png"  href="images/icon.png">
+		<link href="https://fonts.googleapis.com/css?family=Roboto:100,400,900" rel="stylesheet">
+		<link rel='stylesheet' href='https://pbutcher.uk/flipdown/css/flipdown/flipdown.css'>
+		<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.3.1/css/all.css'>
+		<link rel="stylesheet" href="assets/css/countdown.css">
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<style>
+			#overlay{
+				background: lightblue url("images/groovy-flags.png");
+				display: block;
+				position: fixed;
+				width: 100%;
+				height: 100%;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				z-index: 0;
+			}
+		</style>
+		<script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-firestore.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-storage.js"></script>
+
+	</head>
+	<body class="is-preload">
+	<div id="overlay">
+		<div class="example" id="timer" style="padding-top: 300px;">
+			<div id="flipdown" class="flipdown" style="background-color:rgba(255, 255, 255); border-radius: 10px;"></div>
+		  </div>
+	</div>
+		<!-- Wrapper -->
+			<div id="wrapper">
+				
+				<!-- Header -->
+					<header id="header">
+						<h1><a href="index.html"><strong>Multiverse</strong> by HTML5 UP</a></h1>
+						<nav>
+							<ul>
+								<li><a href="#footer" class="icon solid fa-info-circle">About</a></li>
+							</ul>
+						</nav>
+					</header>
+
+				<!-- Main --> <!--this needs to be coded to take the list of pics of flags and print all-->
+					<div id="main">
+						<article class="thumb">
+							<a class="image">
+								<img src="images/flags/001.png" alt="" />
+								<input type="text" name="country" id="country" value="" style="width:50%; bottom: 1em; left: 1em; position:absolute; border-radius: 5px; opacity: .5;"/>
+								<input type="submit" value="guess" style="bottom:1em; right:1em; position:absolute; border-radius: 5px; background-color: #34363b; opacity: .5;" class="primary"/>
+							</a>
+						</article>
+						<article class="thumb">
+							<a class="image">
+								<img src="images/flags/002.png" alt="" />
+								<input type="text" name="country" id="country" value="" style="width:50%; bottom: 1em; left: 1em; position:absolute; border-radius: 5px; opacity: .5;"/>
+								<input type="submit" value="guess" style="bottom:1em; right:1em; position:absolute; border-radius: 5px; background-color: #34363b; opacity: .5;" class="primary"/>
+							</a>	
+						</article>
+						<article class="thumb">
+							<a class="image">
+								<img src="images/flags/003.png" alt="" />
+								<input type="text" name="country" id="country" value="" style="width:50%; bottom: 1em; left: 1em; position:absolute; border-radius: 5px; opacity: .5;"/>
+								<input type="submit" value="guess" style="bottom:1em; right:1em; position:absolute; border-radius: 5px; background-color: #34363b; opacity: .5;" class="primary"/>
+							</a>	
+						</article>
+						<article class="thumb">
+							<a class="image">
+								<img src="images/flags/004.png" alt="" />
+								<input type="text" name="country" id="country" value="" style="width:50%; bottom: 1em; left: 1em; position:absolute; border-radius: 5px; opacity: .5;"/>
+								<input type="submit" value="guess" style="bottom:1em; right:1em; position:absolute; border-radius: 5px; background-color: #34363b; opacity: .5;" class="primary"/>
+							</a>	
+						</article>
+						<article class="thumb">
+							<a class="image">
+								<img src="images/flags/005.png" alt="" />
+								<input type="text" name="country" id="country" value="" style="width:50%; bottom: 1em; left: 1em; position:absolute; border-radius: 5px; opacity: .5;"/>
+								<input type="submit" value="guess" style="bottom:1em; right:1em; position:absolute; border-radius: 5px; background-color: #34363b; opacity: .5;" class="primary"/>
+							</a>	
+						</article>
+						<article class="thumb">
+							<a class="image">
+								<img src="images/flags/006.png" alt="" />
+								<input type="text" name="country" id="country" value="" style="width:50%; bottom: 1em; left: 1em; position:absolute; border-radius: 5px; opacity: .5;"/>
+								<input type="submit" value="guess" style="bottom:1em; right:1em; position:absolute; border-radius: 5px; background-color: #34363b; opacity: .5;" class="primary"/>
+							</a>	
+						</article>
+						<article class="thumb">
+							<a class="image">
+								<img src="images/flags/007.png" alt="" />
+								<input type="text" name="country" id="country" value="" style="width:50%; bottom: 1em; left: 1em; position:absolute; border-radius: 5px; opacity: .5;"/>
+								<input type="submit" value="guess" style="bottom:1em; right:1em; position:absolute; border-radius: 5px; background-color: #34363b; opacity: .5;" class="primary"/>
+							</a>	
+						</article>
+						<article class="thumb">
+							<a class="image">
+								<img src="images/flags/008.png" alt="" />
+								<input type="text" name="country" id="country" value="" style="width:50%; bottom: 1em; left: 1em; position:absolute; border-radius: 5px; opacity: .5;"/>
+								<input type="submit" value="guess" style="bottom:1em; right:1em; position:absolute; border-radius: 5px; background-color: #34363b; opacity: .5;" class="primary"/>
+							</a>	
+						</article>
+						<article class="thumb">
+							<a class="image">
+								<img src="images/flags/009.png" alt="" />
+								<input type="text" name="country" id="country" value="" style="width:50%; bottom: 1em; left: 1em; position:absolute; border-radius: 5px; opacity: .5;"/>
+								<input type="submit" value="guess" style="bottom:1em; right:1em; position:absolute; border-radius: 5px; background-color: #34363b; opacity: .5;" class="primary"/>
+							</a>	
+						</article>
+						<article class="thumb">
+							<a class="image">
+								<img src="images/flags/010.png" alt="" />
+								<input type="text" name="country" id="country" value="" style="width:50%; bottom: 1em; left: 1em; position:absolute; border-radius: 5px; opacity: .5;"/>
+								<input type="submit" value="guess" style="bottom:1em; right:1em; position:absolute; border-radius: 5px; background-color: #34363b; opacity: .5;" class="primary"/>
+							</a>	
+						</article>
+						<article class="thumb">
+							<a class="image">
+								<img src="images/flags/011.png" alt="" />
+								<input type="text" name="country" id="country" value="" style="width:50%; bottom: 1em; left: 1em; position:absolute; border-radius: 5px; opacity: .5;"/>
+								<input type="submit" value="guess" style="bottom:1em; right:1em; position:absolute; border-radius: 5px; background-color: #34363b; opacity: .5;" class="primary"/>
+							</a>	
+						</article>
+						<article class="thumb">
+							<a class="image">
+								<img src="images/flags/012.png" alt="" />
+								<input type="text" name="country" id="country" value="" style="width:50%; bottom: 1em; left: 1em; position:absolute; border-radius: 5px; opacity: .5;"/>
+								<input type="submit" value="guess" style="bottom:1em; right:1em; position:absolute; border-radius: 5px; background-color: #34363b; opacity: .5;" class="primary"/>
+							</a>	
+						</article>
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer" class="panel">
+						<div class="inner split">
+							<div>
+								<section>
+									<h2>Magna feugiat sed adipiscing</h2>
+									<p>Nulla consequat, ex ut suscipit rutrum, mi dolor tincidunt erat, et scelerisque turpis ipsum eget quis orci mattis aliquet. Maecenas fringilla et ante at lorem et ipsum. Dolor nulla eu bibendum sapien. Donec non pharetra dui. Nulla consequat, ex ut suscipit rutrum, mi dolor tincidunt erat, et scelerisque turpis ipsum.</p>
+								</section>
+								<section>
+									<h2>Follow me on ...</h2>
+									<ul class="icons">
+										<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+										<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+										<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+										<li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+										<li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>
+										<li><a href="#" class="icon brands fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+									</ul>
+								</section>
+								<p class="copyright">
+									&copy; Unttled. Design: <a href="http://html5up.net">HTML5 UP</a>.
+								</p>
+							</div>
+							<div>
+								<section>
+									<h2>Get in touch</h2>
+									<form method="post" action="#">
+										<div class="fields">
+											<div class="field half">
+												<input type="text" name="name" id="name" placeholder="Name" />
+											</div>
+											<div class="field half">
+												<input type="text" name="email" id="email" placeholder="Email" />
+											</div>
+											<div class="field">
+												<textarea name="message" id="message" rows="4" placeholder="Message"></textarea>
+											</div>
+										</div>
+										<ul class="actions">
+											<li><input type="submit" value="Send" class="primary" /></li>
+											<li><input type="reset" value="Reset" /></li>
+										</ul>
+									</form>
+								</section>
+							</div>
+						</div>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+		<script src='https://pbutcher.uk/flipdown/js/flipdown/flipdown.js'></script><script  src="assets/js/countdown.js"></script>
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.poptrox.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+			<script src="assets/js/firebase.js"></script>
+
+			<script>
+				const firebase = require("firebase/app");
+				require("firebase/firestore");
+
+				var firebaseConfig = {
+					apiKey: "AIzaSyAKBR9W7oK5OpGCOPLXa6NRFxU6Pb0zSdQ",
+					authDomain: "flagday-95308.firebaseapp.com",
+					projectId: "flagday-95308",
+					storageBucket: "flagday-95308.appspot.com",
+					messagingSenderId: "617381883851",
+					appId: "1:617381883851:web:b87a151c7a9eb104df104e",
+					measurementId: "G-9HLKY9YBQF"
+				};
+				firebase.initializeApp(firebaseConfig);
+			  </script>
+			  
+	</body>
+</html>
