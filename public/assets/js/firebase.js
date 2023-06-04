@@ -4,7 +4,7 @@ import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.1/firebas
 import { getAnalytics } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-analytics.js'
 
 // Add Firebase products that you want to use
-import { getAuth } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js'
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js'
 import { getFirestore, collection, getDocs } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js'
 
 console.log("boo");
@@ -31,13 +31,13 @@ var check
 var anchorElement
 var articleElement
 var imageContainer = document.getElementById('main');
-var i = 0;
+var docCount = 0;
 docsSnap.forEach(doc => {
   // get the id
   //console.log(doc.id);
   //console.log(doc.data()['name'], doc.data()['url']);
-  i = i +1;
-  console.log(i);
+  docCount = docCount + 1;
+  //console.log(i);
   const url = doc.data()['url'];
   const img = document.createElement('img');
       img.src = url;
@@ -50,36 +50,13 @@ docsSnap.forEach(doc => {
           img.style.width = '95%';
           img.style.position = 'absolute';
 
-                  // Create an <input> element for the country name
-                  var countryInput = document.createElement('input');
-                  countryInput.type = 'text';
-                  countryInput.name = 'country';
-                  countryInput.id = i.toString();
-                  countryInput.value = '';
-                  countryInput.style.width = '50%';
-                  countryInput.style.bottom = '3em';
-                  countryInput.style.left = '1em';
-                  countryInput.style.position = 'absolute';
-                  countryInput.style.borderRadius = '5px';
-                  countryInput.style.opacity = '.5';
-          
-                  // Create an <input> element for the guess button
-                  var guessButton = document.createElement('input');
-                  guessButton.type = 'submit';
-                  guessButton.value = 'guess';
-                  guessButton.id = i.toString();
-                  guessButton.style.bottom = '3em';
-                  guessButton.style.right = '3em';
-                  guessButton.style.position = 'absolute';
-                  guessButton.style.borderRadius = '5px';
-                  guessButton.style.backgroundColor = '#34363b';
-                  guessButton.style.opacity = '.5';
-                  guessButton.className = 'primary';
+                  
 
           anchorElement = document.createElement('a');
           anchorElement.appendChild(img);
-          anchorElement.appendChild(countryInput);
-          anchorElement.appendChild(guessButton);
+          //anchorElement.appendChild(countryInput);
+          //anchorElement.appendChild(guessButton);
+          anchorElement.id = "anchor" + docCount.toString();
          anchorElement.classList.add('image');
           anchorElement.style.backgroundSize = 'cover';
           anchorElement.style.content = '';
@@ -180,3 +157,67 @@ document.addEventListener("DOMContentLoaded", function() {
 //   .catch(function(error) {
 //     console.log('Error fetching images:', error);
 //   });
+
+//#################### authentication ###########################
+
+const auth = getAuth(firebase);
+var email = document.getElementById("email");
+var password = document.getElementById("password");
+var login = document.getElementById("login");
+var logoutBtn = document.getElementById("logout");
+
+const loginEmailPassword = async () => {
+  const loginEmail = email.value;
+  const loginPassword = password.value;
+
+  const userCreds = await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
+  console.log(userCreds.user);
+}
+login.addEventListener("click", loginEmailPassword);
+
+const monitorAuthState = async () => {
+  onAuthStateChanged(auth, user => {
+    if(user){
+      for(var i =1; i <= docCount; i++){
+        var anchor = document.getElementById("anchor"+i.toString());
+        // Create an <input> element for the country name
+        var countryInput = document.createElement('input');
+        countryInput.type = 'text';
+        countryInput.name = 'country';
+        countryInput.id = i.toString();
+        countryInput.value = '';
+        countryInput.style.width = '50%';
+        countryInput.style.bottom = '3em';
+        countryInput.style.left = '1em';
+        countryInput.style.position = 'absolute';
+        countryInput.style.borderRadius = '5px';
+        countryInput.style.opacity = '.5';
+
+        // Create an <input> element for the guess button
+        var guessButton = document.createElement('input');
+        guessButton.type = 'submit';
+        guessButton.value = 'guess';
+        guessButton.id = i.toString();
+        guessButton.style.bottom = '3em';
+        guessButton.style.right = '3em';
+        guessButton.style.position = 'absolute';
+        guessButton.style.borderRadius = '5px';
+        guessButton.style.backgroundColor = '#34363b';
+        guessButton.style.opacity = '.5';
+        guessButton.className = 'primary';
+
+        anchor.appendChild(countryInput);
+        anchor.appendChild(guessButton);
+      }
+    }
+  })
+}
+
+const logout = async () => {
+  await signOut(auth);
+  location.reload();
+}
+
+logoutBtn.addEventListener("click", logout);
+
+monitorAuthState();
