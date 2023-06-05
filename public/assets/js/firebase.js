@@ -5,9 +5,8 @@ import { getAnalytics } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase
 
 // Add Firebase products that you want to use
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js'
-import { getFirestore, collection, getDocs } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js'
+import { getFirestore, collection, getDocs, getDoc, doc } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js'
 
-console.log("boo");
 
 var firebaseConfig = {
   apiKey: "AIzaSyAKBR9W7oK5OpGCOPLXa6NRFxU6Pb0zSdQ",
@@ -165,26 +164,28 @@ var email = document.getElementById("email");
 var password = document.getElementById("password");
 var login = document.getElementById("login");
 var logoutBtn = document.getElementById("logout");
+var welcome = document.getElementById("welcome");
 
 const loginEmailPassword = async () => {
   const loginEmail = email.value;
   const loginPassword = password.value;
 
   const userCreds = await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
-  console.log(userCreds.user);
+  //console.log(userCreds.user);
 }
 login.addEventListener("click", loginEmailPassword);
 
 const monitorAuthState = async () => {
-  onAuthStateChanged(auth, user => {
+  onAuthStateChanged(auth, function(user) {
     if(user){
+      var uid = user.uid
       for(var i =1; i <= docCount; i++){
         var anchor = document.getElementById("anchor"+i.toString());
         // Create an <input> element for the country name
         var countryInput = document.createElement('input');
         countryInput.type = 'text';
         countryInput.name = 'country';
-        countryInput.id = i.toString();
+        countryInput.id = "guessI"+i.toString();
         countryInput.value = '';
         countryInput.style.width = '50%';
         countryInput.style.bottom = '3em';
@@ -197,7 +198,7 @@ const monitorAuthState = async () => {
         var guessButton = document.createElement('input');
         guessButton.type = 'submit';
         guessButton.value = 'guess';
-        guessButton.id = i.toString();
+        guessButton.id = "guessB"+i.toString();
         guessButton.style.bottom = '3em';
         guessButton.style.right = '3em';
         guessButton.style.position = 'absolute';
@@ -205,10 +206,17 @@ const monitorAuthState = async () => {
         guessButton.style.backgroundColor = '#34363b';
         guessButton.style.opacity = '.5';
         guessButton.className = 'primary';
+        //guessButton.onclick = checkGuess(countryInput.value);
 
         anchor.appendChild(countryInput);
         anchor.appendChild(guessButton);
       }
+      makePageYou(uid);
+      ListenUp();
+    }else{
+      welcome.innerHTML = 'Welcome to <strong>Flag Day</strong>'
+
+      console.log("user logged out")
     }
   })
 }
@@ -221,3 +229,61 @@ const logout = async () => {
 logoutBtn.addEventListener("click", logout);
 
 monitorAuthState();
+
+async function makePageYou(uid){
+  const userRef = doc(db, 'users', uid)
+      //console.log(user.uid, userRef)
+      const userSnap = await getDoc(userRef);
+      
+      console.log(userSnap.data()["name"])
+      if (userSnap){
+        //var n = data(userSnap);
+        welcome.innerHTML = 'Welcome to <strong>Flag Day</strong>, '+ userSnap.data()["name"];
+      }else{
+          console.log("no document found")
+      }
+    }
+
+
+
+function ListenUp(){
+  for(var i = 1; i<= docCount; i++){
+    //get elements
+    var guessI = document.getElementById("guessI"+i.toString());
+    var guessB = document.getElementById("guessB"+i.toString());
+
+    //add listeners and send data
+    guessB.addEventListener("click", checkGuess)
+
+  }
+}
+
+async function checkGuess(event){
+  //we need to get the country name and check with value
+  const inputField = event.target.previousElementSibling;
+  var index = inputField.id.slice(6);
+  if(index.length == 1){
+    index = "00"+index;
+  }else if(index.length == 2){
+    index = "0"+index;
+  }
+  const iValue = inputField.value;
+  if(iValue){
+    console.log(iValue, index)
+    const ctryRef = doc(db, 'country_flags', index)
+      //console.log(user.uid, userRef)
+      const ctrySnap = await getDoc(ctryRef);
+      if (ctrySnap){
+        if (ctrySnap.data()["name"].toLowerCase() == iValue.toLowerCase()){
+          console.log("correct");
+        }else{
+          console.log("no");
+        }
+      }else{
+          console.log("no document found")
+      }
+  }else{
+    console.log('Element clicked but empty');
+  }
+  
+}
