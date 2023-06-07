@@ -70,14 +70,13 @@
 									<p>Nulla consequat, ex ut suscipit rutrum, mi dolor tincidunt erat, et scelerisque turpis ipsum eget quis orci mattis aliquet. Maecenas fringilla et ante at lorem et ipsum. Dolor nulla eu bibendum sapien. Donec non pharetra dui. Nulla consequat, ex ut suscipit rutrum, mi dolor tincidunt erat, et scelerisque turpis ipsum.</p>
 								</section>
 								<section>
-									<h2>Follow me on ...</h2>
+									<h2>Contact</h2>
 									<ul class="icons">
-										<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-										<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-										<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-										<li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
-										<li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>
-										<li><a href="#" class="icon brands fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+										<li><a href="https://twitter.com/lanecolquett" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+										<li><a href="https://www.pinterest.com/lanecolquett" class="icon brands fa-pinterest"><span class="label">Pinterest</span></a></li>
+										<!--li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li-->
+										<li><a href="https://github.com/vlcolquett" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+										<li><a href="mailto:vlcolquett@hotmail.com.com?subject=mail%20from%20FLAGDAY" class="icon regular fa-envelope"><span class="label">E-Mail</span></a></li>
 									</ul>
 								</section>
 								<p class="copyright">
@@ -86,9 +85,9 @@
 							</div>
 							<div>
 								<section>
-									<h2>Login</h2>
+									<!--h2>Login</h2-->
 									<form method="post" action="#">
-										<div class="fields">
+										<div class="fields" id="log-fields">
 											<div class="field half">
 												<input type="email" name="email" id="email" placeholder="email" />
 											</div>
@@ -97,11 +96,13 @@
 											</div>
 											<!--div class="field">
 												<textarea name="message" id="message" rows="4" placeholder="Message"></textarea>
-											</div-->
+											</div-->				
 										</div>
+										<div id="error" style="text-align: center; color:red; padding: 0%; margin: 0%; border: 0cap;"> </div>
 										<ul class="actions">
-											<li><input id="login" type="button" value="Login" class="primary"/></li>
-											<li><input id="logout" type="button" value="Logout" /></li>
+											<li id="in-list" style="display:block"><input id="login" type="button" value="Login" class="primary"/></li>
+											<li id="out-list" style="display: none;"><input id="logout" type="button" value="Logout" /></li>
+											
 										</ul>
 									</form>
 								</section>

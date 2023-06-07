@@ -167,11 +167,16 @@ var logoutBtn = document.getElementById("logout");
 var welcome = document.getElementById("welcome");
 
 const loginEmailPassword = async () => {
-  const loginEmail = email.value;
-  const loginPassword = password.value;
+   try{ 
+    const loginEmail = email.value;
+    const loginPassword = password.value;
 
-  const userCreds = await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
-  //console.log(userCreds.user);
+    const userCreds = await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
+    //console.log(userCreds.user);
+  }catch (error){
+    console.log('Error logging in: ', error);
+    document.getElementById("error").innerHTML = 'invalid credentials'
+  }
 }
 login.addEventListener("click", loginEmailPassword);
 
@@ -179,6 +184,8 @@ const monitorAuthState = async () => {
   onAuthStateChanged(auth, function(user) {
     if(user){
       var uid = user.uid
+      email.value = "";
+      password.value = "";
       for(var i =1; i <= docCount; i++){
         var anchor = document.getElementById("anchor"+i.toString());
         // Create an <input> element for the country name
@@ -211,11 +218,15 @@ const monitorAuthState = async () => {
         anchor.appendChild(countryInput);
         anchor.appendChild(guessButton);
       }
+      document.getElementById("out-list").style.display = "block";
+      document.getElementById("in-list").style.display = "none"
+      document.getElementById("log-fields").innerHTML = ""
+      $(".panel").trigger('---hide');
       makePageYou(uid);
       ListenUp();
     }else{
       welcome.innerHTML = 'Welcome to <strong>Flag Day</strong>'
-
+      
       console.log("user logged out")
     }
   })
