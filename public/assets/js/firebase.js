@@ -5,7 +5,7 @@ import { getAnalytics } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase
 
 // Add Firebase products that you want to use
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js'
-import { getFirestore, collection, getDocs, getDoc, doc } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js'
+import { getFirestore, collection, getDocs, getDoc, doc, updateDoc } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js'
 
 
 var firebaseConfig = {
@@ -318,6 +318,21 @@ async function checkGuess(event){
           correct = correct + 1
           if(correct == 55){ //i know, i know this is hardcoded... get the count of images when you're not tired...
             console.log("you got all right") // store score to the user if it is higher
+            const user = auth.currentUser;
+            //const uname = welcome.innerHTML.split(" ")[1];
+            console.log(user.uid);
+            const highScore = doc(db, 'users', user.uid)
+            const hsSnap = await getDoc(highScore);
+            if(hsSnap.data()["score"] < cScore){
+              await updateDoc(highScore, {
+                score: cScore
+              });
+              alert("You've got a new High Score! Press okay to play again or explore some more!");
+              location.reload();
+            }else{
+              alert("You didn't beat your score, but you can play again! Press okay to continue.");
+              location.reload();
+            }
           }
         }else{
           console.log("no");
