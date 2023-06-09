@@ -4,7 +4,7 @@ import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.1/firebas
 import { getAnalytics } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-analytics.js'
 
 // Add Firebase products that you want to use
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js'
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js'
 import { getFirestore, collection, getDocs, getDoc, doc } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js'
 
 
@@ -26,7 +26,6 @@ const colRef = collection(db, 'country_flags');
 const docsSnap = await getDocs(colRef);
 
 
-var check
 var anchorElement
 var articleElement
 var imageContainer = document.getElementById('main');
@@ -48,18 +47,16 @@ docsSnap.forEach(doc => {
           img.style.height = '95%';
           img.style.width = '95%';
           img.style.position = 'absolute';
-
+          img.id = 'fimg'+docCount.toString();
                   
 
           anchorElement = document.createElement('a');
           anchorElement.appendChild(img);
-          //anchorElement.appendChild(countryInput);
-          //anchorElement.appendChild(guessButton);
           anchorElement.id = "anchor" + docCount.toString();
          anchorElement.classList.add('image');
           anchorElement.style.backgroundSize = 'cover';
           anchorElement.style.content = '';
-          anchorElement.style.display = 'block';
+          anchorElement.style.display = 'block';         
           anchorElement.style.height = '100%';
           anchorElement.style.position = 'absolute';
           anchorElement.style.top = '0';
@@ -73,7 +70,7 @@ docsSnap.forEach(doc => {
       articleElement = document.createElement('article');
           articleElement.classList.add('thumb');  
           articleElement.appendChild(anchorElement);
-
+          
       //var imageContainer = document.getElementById('main');
           imageContainer.appendChild(articleElement);      
           //check = imageContainer.innerHTML
@@ -116,15 +113,15 @@ docsSnap.forEach(doc => {
 //   console.log(error);
 // });
 
-document.addEventListener("DOMContentLoaded", function() {
-  const images = document.querySelectorAll('a');
-  images.forEach(function(img) {
-    img.addEventListener('load', function() {
-      // Apply the styling once the image has finished loading
-      img.classList.add('image');
-    });
-  });
-});
+// document.addEventListener("DOMContentLoaded", function() {
+//   const images = document.querySelectorAll('a');
+//   images.forEach(function(img) {
+//     img.addEventListener('load', function() {
+//       // Apply the styling once the image has finished loading
+//       img.classList.add('image');
+//     });
+//   });
+// });
 
 
 // Fetch the list of images in the 'flag' folder
@@ -165,6 +162,8 @@ var password = document.getElementById("password");
 var login = document.getElementById("login");
 var logoutBtn = document.getElementById("logout");
 var welcome = document.getElementById("welcome");
+var reset = document.getElementById("reset");
+var score = document.getElementById("score");
 
 const loginEmailPassword = async () => {
    try{ 
@@ -172,7 +171,6 @@ const loginEmailPassword = async () => {
     const loginPassword = password.value;
 
     const userCreds = await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
-    //console.log(userCreds.user);
   }catch (error){
     console.log('Error logging in: ', error);
     document.getElementById("error").innerHTML = 'invalid credentials'
@@ -200,27 +198,29 @@ const monitorAuthState = async () => {
         countryInput.style.position = 'absolute';
         countryInput.style.borderRadius = '5px';
         countryInput.style.opacity = '.5';
+        countryInput.style.display = 'block';
 
         // Create an <input> element for the guess button
         var guessButton = document.createElement('input');
         guessButton.type = 'submit';
         guessButton.value = 'guess';
         guessButton.id = "guessB"+i.toString();
-        guessButton.style.bottom = '3em';
+        guessButton.style.bottom = '3.2em';
         guessButton.style.right = '3em';
         guessButton.style.position = 'absolute';
         guessButton.style.borderRadius = '5px';
         guessButton.style.backgroundColor = '#34363b';
         guessButton.style.opacity = '.5';
         guessButton.className = 'primary';
-        //guessButton.onclick = checkGuess(countryInput.value);
+        guessButton.style.display = 'block'
 
         anchor.appendChild(countryInput);
         anchor.appendChild(guessButton);
       }
       document.getElementById("out-list").style.display = "block";
-      document.getElementById("in-list").style.display = "none"
-      document.getElementById("log-fields").innerHTML = ""
+      document.getElementById("in-list").style.display = "none";
+      document.getElementById("resetP").style.display = "none";
+      document.getElementById("log-fields").innerHTML = "";
       $(".panel").trigger('---hide');
       makePageYou(uid);
       ListenUp();
@@ -231,6 +231,20 @@ const monitorAuthState = async () => {
     }
   })
 }
+
+const resetP = async () => {
+  var r_email = prompt("Enter the email for the account you would like to reset the password for.");
+  sendPasswordResetEmail(auth, r_email)
+  .then(() => {
+    alert("Password email has been sent.");
+  })
+  .catch((error)=> {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+  })
+}
+
+reset.addEventListener("click", resetP);
 
 const logout = async () => {
   await signOut(auth);
@@ -245,18 +259,20 @@ async function makePageYou(uid){
   const userRef = doc(db, 'users', uid)
       //console.log(user.uid, userRef)
       const userSnap = await getDoc(userRef);
-      
+      var uscore = userSnap.data()["score"];
+      console.log("score ", uscore);
       console.log(userSnap.data()["name"])
       if (userSnap){
         //var n = data(userSnap);
-        welcome.innerHTML = 'Welcome to <strong>Flag Day</strong>, '+ userSnap.data()["name"];
+        welcome.innerHTML = 'Welcome, '+ userSnap.data()["name"];
+        score.innerHTML = '<strong>High Score: '+ uscore +' </strong>';
       }else{
           console.log("no document found")
       }
     }
 
 
-
+//######################CHECK COUNTRY GUESS#######################################
 function ListenUp(){
   for(var i = 1; i<= docCount; i++){
     //get elements
@@ -269,26 +285,45 @@ function ListenUp(){
   }
 }
 
+var cScore = 0;
+var correct = 0;
 async function checkGuess(event){
   //we need to get the country name and check with value
   const inputField = event.target.previousElementSibling;
   var index = inputField.id.slice(6);
   if(index.length == 1){
-    index = "00"+index;
+    var indexF = "00"+index;
   }else if(index.length == 2){
-    index = "0"+index;
+    var indexF = "0"+index;
   }
   const iValue = inputField.value;
+ 
   if(iValue){
-    console.log(iValue, index)
-    const ctryRef = doc(db, 'country_flags', index)
+    console.log(iValue, indexF)
+    const ctryRef = doc(db, 'country_flags', indexF)
       //console.log(user.uid, userRef)
+      // var gScore = score.innerHTML.split(" ")[2];
+      // console.log(parseInt(gScore));
       const ctrySnap = await getDoc(ctryRef);
+      var guessB = 'guessB'+index.toString();
+      var Fimage = 'fimg'+index.toString();
       if (ctrySnap){
-        if (ctrySnap.data()["name"].toLowerCase() == iValue.toLowerCase()){
+        if (ctrySnap.data()["name"].toLowerCase() == iValue.toLowerCase().trim()){
           console.log("correct");
+          inputField.style.display = 'none';
+          document.getElementById(guessB).style.display = 'none';
+          document.getElementById(Fimage).style.border = '10px solid rgb(94, 248, 63)';
+          cScore = cScore + 50;
+          score.innerHTML = 'Score: ' + cScore.toString();
+          correct = correct + 1
+          if(correct == 55){ //i know, i know this is hardcoded... get the count of images when you're not tired...
+            console.log("you got all right") // store score to the user if it is higher
+          }
         }else{
           console.log("no");
+          document.getElementById(Fimage).style.border = '10px solid red'
+          cScore = cScore - 10;
+          score.innerHTML = 'Score: ' + cScore.toString();
         }
       }else{
           console.log("no document found")
@@ -296,5 +331,5 @@ async function checkGuess(event){
   }else{
     console.log('Element clicked but empty');
   }
-  
+  console.log("current ", cScore);
 }

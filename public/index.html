@@ -40,7 +40,7 @@
 	<body class="is-preload">
 	<div id="overlay">
 		<div class="example" id="timer" style="padding-top: 300px;">
-			<div id="flipdown" class="flipdown" style="background-color:rgba(255, 255, 255); border-radius: 10px;"></div>
+			<div id="flipdown" class="flipdown" style="background-color:rgb(255, 255, 255); border-radius: 10px;"></div>
 		  </div>
 	</div>
 		<!-- Wrapper -->
@@ -49,9 +49,10 @@
 				<!-- Header -->
 					<header id="header">
 						<h1 id="welcome">Welcome to <strong>Flag Day</strong></h1>
-						<nav>
+						
+						<nav>	
 							<ul>
-								<li><a href="#footer" class="icon solid fa-info-circle">About</a></li>
+								<li><a href="#footer" class="icon solid fa-info-circle" id="score"></a></li>
 							</ul>
 						</nav>
 					</header>
@@ -64,25 +65,6 @@
 				<!-- Footer -->
 					<footer id="footer" class="panel">
 						<div class="inner split">
-							<div>
-								<section>
-									<h2>Magna feugiat sed adipiscing</h2>
-									<p>Nulla consequat, ex ut suscipit rutrum, mi dolor tincidunt erat, et scelerisque turpis ipsum eget quis orci mattis aliquet. Maecenas fringilla et ante at lorem et ipsum. Dolor nulla eu bibendum sapien. Donec non pharetra dui. Nulla consequat, ex ut suscipit rutrum, mi dolor tincidunt erat, et scelerisque turpis ipsum.</p>
-								</section>
-								<section>
-									<h2>Contact</h2>
-									<ul class="icons">
-										<li><a href="https://twitter.com/lanecolquett" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-										<li><a href="https://www.pinterest.com/lanecolquett" class="icon brands fa-pinterest"><span class="label">Pinterest</span></a></li>
-										<!--li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li-->
-										<li><a href="https://github.com/vlcolquett" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
-										<li><a href="mailto:vlcolquett@hotmail.com.com?subject=mail%20from%20FLAGDAY" class="icon regular fa-envelope"><span class="label">E-Mail</span></a></li>
-									</ul>
-								</section>
-								<p class="copyright">
-									&copy; Unttled. Design: <a href="http://html5up.net">HTML5 UP</a>.
-								</p>
-							</div>
 							<div>
 								<section>
 									<!--h2>Login</h2-->
@@ -100,12 +82,37 @@
 										</div>
 										<div id="error" style="text-align: center; color:red; padding: 0%; margin: 0%; border: 0cap;"> </div>
 										<ul class="actions">
-											<li id="in-list" style="display:block"><input id="login" type="button" value="Login" class="primary"/></li>
-											<li id="out-list" style="display: none;"><input id="logout" type="button" value="Logout" /></li>
-											
+											<li id="in-list" style="display:block;"><input id="login" type="button" value="Login" class="primary"/></li>
+											<li id="resetP" style="display: block;"><a id="reset">forgot password?</a></li>
+											<li id="out-list" style="display: none;"><input id="logout" type="button" value="Logout" /></li>							
 										</ul>
 									</form>
 								</section>
+								<section>
+									<h2>What's all this about?</h2>
+									<p>This is Flag Day 2023, a project powered by Google Firebase created by Lane Colquett! Registered users will be able to test their knowledge on flags of countries around the world. When signed in, a user can make guesses for each flag and when all have been guessed correctly, a high score will be recorded. Every correct guess grants 50 points and for every incorrect guess deducts 10 points. Contact via email below for an account!</p>
+									<p>Have fun and happy Flag Day!</p>
+								</section>
+							</div>
+							<div>
+								<section>
+									<h2>What is Flag Day?</h2>
+									<p>Flag Day in the United States is celebrated on June 14th each year. It commemorates the adoption of the flag of the United States, which happened on June 14, 1777. On this day, Americans honor and show respect for the national flag, its history, and its significance as a symbol of the country's unity, freedom, and democracy. It is a time for Americans to reflect on the importance of the flag and the principles it represents.</p>
+									<p>Several countries around the world have their own flag days or similar celebrations to honor their national flags. The specific dates and traditions may vary, but the purpose is generally to honor the national flag and its importance to the country's identity and history.</p>
+								</section>
+								<section>
+									<h2>Contact</h2>
+									<ul class="icons">
+										<li><a href="https://twitter.com/lanecolquett" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+										<li><a href="https://www.pinterest.com/lanecolquett" class="icon brands fa-pinterest"><span class="label">Pinterest</span></a></li>
+										<!--li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li-->
+										<li><a href="https://github.com/vlcolquett" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+										<li><a href="mailto:vlcolquett@hotmail.com.com?subject=mail%20from%20FLAGDAY" class="icon regular fa-envelope"><span class="label">E-Mail</span></a></li>
+									</ul>
+								</section>
+								<p class="copyright">
+									&copy; Virginia Lane Colquett. June 2023.
+								</p>
 							</div>
 						</div>
 					</footer>
