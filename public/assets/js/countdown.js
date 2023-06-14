@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   // Unix timestamp (in seconds) to count down to
-  var flagDay = (new Date("June 14, 2023").getTime() / 1000) + (86400 * 2) + 1;
+  var flagDay = (new Date("June 12, 2023").getTime() / 1000) + (86400 * 2) + 1;
 
   // Set up FlipDown
   var flipdown = new FlipDown(flagDay)
