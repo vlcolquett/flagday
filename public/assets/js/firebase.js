@@ -1,3 +1,4 @@
+//import {firebaseConfig} from './firebaseConfig'
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js'
 //import { getStorage, ref, list, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-storage.js"			
 // If you enabled Analytics in your project, add the Firebase SDK for Google Analytics
@@ -6,7 +7,6 @@ import { getAnalytics } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase
 // Add Firebase products that you want to use
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js'
 import { getFirestore, collection, getDocs, getDoc, doc, updateDoc } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js'
-
 
 var firebaseConfig = {
   apiKey: "AIzaSyAKBR9W7oK5OpGCOPLXa6NRFxU6Pb0zSdQ",
@@ -18,7 +18,8 @@ var firebaseConfig = {
   measurementId: "G-9HLKY9YBQF"
 };
 const firebase = initializeApp(firebaseConfig);
-//################################ FIRESTORE
+
+//################################ FIRESTORE #############################
 const db = getFirestore(firebase);
 
 const colRef = collection(db, 'country_flags');
